@@ -47,3 +47,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- .Values.image.repository -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "ntfy.metricsEnabled" -}}
+{{- if regexMatch "(?m)^\\s*enable-metrics:\\s*true\\s*$" (default "" .Values.config.extra) -}}
+true
+{{- end -}}
+{{- end -}}

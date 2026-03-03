@@ -81,4 +81,7 @@ ingress:
 config:
   extra: ""
 
+serviceMonitor:
+  labels: {}
+
 resources: {}

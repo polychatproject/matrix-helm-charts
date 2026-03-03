@@ -309,6 +309,21 @@
         }
       }
     },
+    "serviceMonitor": {
+      "type": "object",
+      "description": "ServiceMonitor metadata overrides when metrics are enabled via config.extra.",
+      "additionalProperties": false,
+      "properties": {
+        "labels": {
+          "type": "object",
+          "description": "Additional labels added to ServiceMonitor metadata.",
+          "default": {},
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "resources": {
       "type": "object",
       "description": "Container resource requests and limits for ntfy.",

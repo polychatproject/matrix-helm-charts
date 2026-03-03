@@ -85,6 +85,30 @@ The chart enables HTTP readiness and liveness probes by default using ntfy's hea
 
 Probe settings are configurable under `probes.readiness` and `probes.liveness`.
 
+## Metrics and ServiceMonitor
+
+If you enable metrics in ntfy config:
+
+```yaml
+config:
+  extra: |
+    enable-metrics: true
+```
+
+the chart automatically creates a `ServiceMonitor` (Prometheus Operator CRD) that scrapes:
+
+- Service port: `http`
+- Path: `/metrics`
+- Interval: `30s`
+
+For Prometheus discovery label selectors (for example kube-prometheus-stack), you can add labels:
+
+```yaml
+serviceMonitor:
+  labels:
+    release: monitoring
+```
+
 ## TLS Options
 
 ### cert-manager (default)

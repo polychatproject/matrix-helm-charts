@@ -9,5 +9,6 @@ spec:
     {{- include "ntfy.selectorLabels" . | nindent 4 }}
   ports:
     - protocol: TCP
+      name: http
       port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
