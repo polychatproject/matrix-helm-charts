@@ -21,3 +21,11 @@ A collection of helm charts to deploy services alongside Matrix, with example `v
 | --- | --- | --- | --- | --- |
 | `mautrix-telegram` | `0.9.1` | `v0.15.3` | [mautrix/telegram](https://github.com/mautrix/telegram) | A Matrix-Telegram hybrid puppeting/relaybot bridge. |
 | `mautrix-googlechat` | `0.9.0` | `v0.5.2` | [mautrix/googlechat](https://github.com/mautrix/googlechat) | A Matrix-Google Chat puppeting bridge. |
+
+#### Go Bridges
+
+**Note:** The go bridges are a current WIP, in order to reduce duplication I am testing using a Library chart to handle most all of the helm chart, with lightweight charts on top for the bridge specifics.
+
+| Component | Helm Chart Version | App Version | Repository | Description |
+| --- | --- | --- | --- | --- |
+| `mautrix-whatsapp` | `0.1.0` | `v0.2602.0` | [mautrix/whatsapp](https://github.com/mautrix/whatsapp) | A Matrix-WhatsApp puppeting bridge built on the shared `mautrix-go-base` chart library. |
