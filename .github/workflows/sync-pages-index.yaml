@@ -76,6 +76,6 @@ jobs:
               exit 0
             fi
 
-            git commit -m "chore(pages): sync index.md from README"
+            git commit -m "Sync index.md from README"
             git push origin gh-pages
           )
