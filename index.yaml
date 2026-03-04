@@ -396,6 +396,24 @@ entries:
     urls:
     - https://github.com/cyclikal94/matrix-helm-charts/releases/download/mautrix-linkedin-0.1.0/mautrix-linkedin-0.1.0.tgz
     version: 0.1.0
+  mautrix-meta:
+  - apiVersion: v2
+    appVersion: v0.2602.0
+    created: "2026-03-04T08:33:36.166969682Z"
+    dependencies:
+    - name: mautrix-go-base
+      repository: file://../mautrix-go-base
+      version: 0.1.4
+    description: Helm chart for mautrix-meta
+    digest: 40bc1dae2b213d4d9a9ec82d94dbfac102545ead72f74758015882ceeadcbcf2
+    home: https://docs.mau.fi/bridges/go/meta/
+    name: mautrix-meta
+    sources:
+    - https://github.com/mautrix/meta
+    type: application
+    urls:
+    - https://github.com/cyclikal94/matrix-helm-charts/releases/download/mautrix-meta-0.1.0/mautrix-meta-0.1.0.tgz
+    version: 0.1.0
   mautrix-signal:
   - apiVersion: v2
     appVersion: v0.2602.2
@@ -883,4 +901,4 @@ entries:
     urls:
     - https://github.com/cyclikal94/matrix-helm-charts/releases/download/ntfy-0.2.0/ntfy-0.2.0.tgz
     version: 0.2.0
-generated: "2026-03-03T16:02:59.32128394Z"
+generated: "2026-03-04T08:33:36.16709283Z"
