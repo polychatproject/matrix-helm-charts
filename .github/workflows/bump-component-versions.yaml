@@ -53,6 +53,18 @@ jobs:
                 return `release-${semverOnly[1]}`;
               }
 
+              // Some upstreams publish release tags as vYY.MM[.patch] while
+              // container/git tags are v0.YYMM.patch. Keep the chart's style.
+              const currentExpandedCalver = current.match(/^v?0\.(\d{2})(\d{2})\.(\d+)$/);
+              const latestCalendarTag = latest.match(/^v?(\d{1,2})\.(\d{1,2})(?:\.(\d+))?$/);
+              if (currentExpandedCalver && latestCalendarTag) {
+                const prefix = /^v/i.test(current) ? "v" : "";
+                const yy = latestCalendarTag[1].padStart(2, "0");
+                const mm = latestCalendarTag[2].padStart(2, "0");
+                const patch = latestCalendarTag[3] || "0";
+                return `${prefix}0.${yy}${mm}.${patch}`;
+              }
+
               return latest;
             }
 
@@ -160,6 +172,7 @@ jobs:
 
                 const chartInfo = {
                   dir: chartDir,
+                  type: (parseSimpleField(chartText, "type") || "application").toLowerCase(),
                   appVersion: parseSimpleField(chartText, "appVersion"),
                   chartVersion: parseSimpleField(chartText, "version"),
                   sourceRepo: parseGithubRepoFromChartText(chartText),
@@ -176,6 +189,11 @@ jobs:
             const updateCandidates = [];
 
             for (const [component, info] of components.entries()) {
+              if (info.helm && info.helm.type && info.helm.type !== "application") {
+                core.info(`Skipping ${component}: chart type '${info.helm.type}' is not version-tracked.`);
+                continue;
+              }
+
               let upstreamRepo =
                 (info.helm && info.helm.sourceRepo) ||
                 parseGithubRepoFromContainerRepo(info.helm && info.helm.imageRepo);
