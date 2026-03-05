@@ -4,7 +4,6 @@
     <style>
         :root {
             --matrix-text: #000000;
-            --pattern-filter: none;
         }
         @media (prefers-color-scheme: dark) {
             :root {
