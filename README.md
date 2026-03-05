@@ -89,7 +89,7 @@ Given there are so many `mautrix` bridges, I'm collating them under a dedicated 
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Google Chat puppeting bridge. For all 5 of you using Google Chat this will allow continuing those conversations in Matrix. No it's not, Allo, Hangouts or Meet - why do/did they have so many. I think this is some holdover from Google+. For capabilities etc. check it's entry on [matrix.org Google Chat Bridges](https://matrix.org/ecosystem/bridges/google_chat/).
+A Matrix-Google Chat puppeting bridge. For all 5 of you using Google Chat this will allow continuing those conversations in Matrix. No it's not, Allo, Hangouts or Meet - why do/did they have so many. I think this is some holdover from Google+. For capabilities etc. check it's entry on [matrix.org Google Chat Bridges](https://matrix.org/ecosystem/bridges/google_chat/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -103,7 +103,7 @@ A Matrix-Google Chat puppeting bridge. For all 5 of you using Google Chat this w
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Telegram hybrid puppeting/relaybot bridge. Note this is a `mautrix` python bridge, so I believe will eventually be replaced with a go variant. For capabilities etc. check it's entry on [matrix.org Telegram Bridges](https://matrix.org/ecosystem/bridges/telegram/).
+A Matrix-Telegram hybrid puppeting/relaybot bridge. Note this is a `mautrix` python bridge, so I believe will eventually be replaced with a go variant. For capabilities etc. check it's entry on [matrix.org Telegram Bridges](https://matrix.org/ecosystem/bridges/telegram/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -142,7 +142,7 @@ The base chart used for all `mautrix-` go bridges. Created in order to reduce du
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Bluesky DM puppeting bridge. No category for Bluesky bridges on [matrix.org Ecosystem Bridges](https://matrix.org/ecosystem/bridges/) for this one.
+A Matrix-Bluesky DM puppeting bridge. No category for Bluesky bridges on [matrix.org Ecosystem Bridges](https://matrix.org/ecosystem/bridges/) for this one. For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -156,7 +156,7 @@ A Matrix-Bluesky DM puppeting bridge. No category for Bluesky bridges on [matrix
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Google Messages puppeting bridge. For capabilities etc. check it's entry on [matrix.org SMS Bridges](https://matrix.org/ecosystem/bridges/sms/).
+A Matrix-Google Messages puppeting bridge. For capabilities etc. check it's entry on [matrix.org SMS Bridges](https://matrix.org/ecosystem/bridges/sms/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -170,7 +170,7 @@ A Matrix-Google Messages puppeting bridge. For capabilities etc. check it's entr
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Google Voice puppeting bridge. No category for Google Voice bridges on [matrix.org Ecosystem Bridges](https://matrix.org/ecosystem/bridges/) for this one.
+A Matrix-Google Voice puppeting bridge. No category for Google Voice bridges on [matrix.org Ecosystem Bridges](https://matrix.org/ecosystem/bridges/) for this one. For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -184,7 +184,7 @@ A Matrix-Google Voice puppeting bridge. No category for Google Voice bridges on 
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-LinkedIn puppeting bridge. For capabilities etc. check it's entry on [matrix.org LinkedIn Bridges](https://matrix.org/ecosystem/bridges/linkedin/).
+A Matrix-LinkedIn puppeting bridge. For capabilities etc. check it's entry on [matrix.org LinkedIn Bridges](https://matrix.org/ecosystem/bridges/linkedin/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -198,7 +198,7 @@ A Matrix-LinkedIn puppeting bridge. For capabilities etc. check it's entry on [m
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Meta puppeting bridge. For capabilities etc. check it's entry on [matrix.org Instagram Bridges](https://matrix.org/ecosystem/bridges/instagram/), don't let the link fool you, it also does Facebook Messaging.
+A Matrix-Meta puppeting bridge. For capabilities etc. check it's entry on [matrix.org Instagram Bridges](https://matrix.org/ecosystem/bridges/instagram/), don't let the link fool you, it also does Facebook Messaging. For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -212,7 +212,7 @@ A Matrix-Meta puppeting bridge. For capabilities etc. check it's entry on [matri
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Signal puppeting bridge. For capabilities etc. check it's entry on [matrix.org Signal Bridges](https://matrix.org/ecosystem/bridges/signal/).
+A Matrix-Signal puppeting bridge. For capabilities etc. check it's entry on [matrix.org Signal Bridges](https://matrix.org/ecosystem/bridges/signal/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -226,7 +226,7 @@ A Matrix-Signal puppeting bridge. For capabilities etc. check it's entry on [mat
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Slack puppeting bridge based on [slack-go](https://github.com/slack-go/slack). For capabilities etc. check it's entry on [matrix.org Slack Bridges](https://matrix.org/ecosystem/bridges/slack/).
+A Matrix-Slack puppeting bridge based on [slack-go](https://github.com/slack-go/slack). For capabilities etc. check it's entry on [matrix.org Slack Bridges](https://matrix.org/ecosystem/bridges/slack/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -240,7 +240,7 @@ A Matrix-Slack puppeting bridge based on [slack-go](https://github.com/slack-go/
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Twitter DM puppeting bridge. For capabilities etc. check it's entry on [matrix.org X Bridges](https://matrix.org/ecosystem/bridges/X/).
+A Matrix-Twitter DM puppeting bridge. For capabilities etc. check it's entry on [matrix.org X Bridges](https://matrix.org/ecosystem/bridges/X/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -254,7 +254,7 @@ A Matrix-Twitter DM puppeting bridge. For capabilities etc. check it's entry on 
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-WhatsApp puppeting bridge based on [whatsmeow](https://github.com/tulir/whatsmeow). For capabilities etc. check it's entry on [matrix.org Whatsapp Bridges](https://matrix.org/ecosystem/bridges/whatsapp/).
+A Matrix-WhatsApp puppeting bridge based on [whatsmeow](https://github.com/tulir/whatsmeow). For capabilities etc. check it's entry on [matrix.org Whatsapp Bridges](https://matrix.org/ecosystem/bridges/whatsapp/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
@@ -268,7 +268,7 @@ A Matrix-WhatsApp puppeting bridge based on [whatsmeow](https://github.com/tulir
 
 </td></tr><tr><td colspan="2">
 
-A Matrix-Zulip puppeting bridge. For capabilities etc. check it's entry on [matrix.org Zulip Bridges](https://matrix.org/ecosystem/bridges/zulip/).
+A Matrix-Zulip puppeting bridge. For capabilities etc. check it's entry on [matrix.org Zulip Bridges](https://matrix.org/ecosystem/bridges/zulip/). For hands-on `mautrix` docs, check [docs.mau.fi](https://docs.mau.fi/bridges/), just note you only need to care about the custom configuration (everything else is handled by the chart).
 
 </td></tr></table>
 
