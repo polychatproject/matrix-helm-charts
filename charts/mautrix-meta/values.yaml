@@ -127,7 +127,8 @@ database:
     port: 5432
     user: mautrix_meta
     password:
-      value: mautrix_meta_password
+      # If empty and postgres.enabled=true, reused from the chart-managed Secret when present; otherwise auto-generated.
+      value: ""
     database: mautrix_meta
     sslMode: disable
 

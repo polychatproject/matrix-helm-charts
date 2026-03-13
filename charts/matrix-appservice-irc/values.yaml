@@ -104,7 +104,8 @@ database:
     port: 5432
     user: matrix_irc
     password:
-      value: matrix_irc_password
+      # If empty and postgres.enabled=true, reused from the chart-managed Secret when present; otherwise auto-generated.
+      value: ""
     database: matrix_irc
     sslMode: prefer
 

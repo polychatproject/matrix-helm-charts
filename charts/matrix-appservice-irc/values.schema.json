@@ -339,7 +339,7 @@
               "properties": {
                 "value": {
                   "type": "string",
-                  "default": "matrix_irc_password"
+                  "description": "If empty and postgres.enabled=true, sourced from the chart-managed Secret when present; otherwise auto-generated. Required when postgres.enabled=false."
                 }
               }
             },

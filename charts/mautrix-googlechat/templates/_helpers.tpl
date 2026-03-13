@@ -94,11 +94,32 @@ appservice-registration-googlechat.yaml
 {{- required "values.database.postgres.user is required" $user -}}
 {{- end -}}
 
-{{- define "mautrix-googlechat.databasePostgresPassword" -}}
+{{- define "mautrix-googlechat.ensureDatabasePostgresPassword" -}}
 {{- $postgres := .Values.database.postgres | default dict -}}
+{{- if not (hasKey $postgres "_computedPassword") -}}
 {{- $passwordCfg := (get $postgres "password") | default dict -}}
 {{- $password := (get $passwordCfg "value") | default "" -}}
-{{- required "values.database.postgres.password.value is required" $password -}}
+{{- if eq $password "" -}}
+{{- if .Values.postgres.enabled -}}
+{{- $existing := lookup "v1" "Secret" .Release.Namespace (include "mautrix-googlechat.postgresFullname" .) -}}
+{{- if and $existing (hasKey $existing "data") (hasKey $existing.data "password") -}}
+{{- $password = (index $existing.data "password" | b64dec) -}}
+{{- else -}}
+{{- $password = (randAlphaNum 64 | sha256sum) -}}
+{{- end -}}
+{{- end -}}
+{{- if eq $password "" -}}
+{{- fail "values.database.postgres.password.value is required when postgres.enabled=false" -}}
+{{- else -}}
+{{- $_ := set $postgres "_computedPassword" $password -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "mautrix-googlechat.databasePostgresPassword" -}}
+{{- include "mautrix-googlechat.ensureDatabasePostgresPassword" . -}}
+{{- index .Values.database.postgres "_computedPassword" -}}
 {{- end -}}
 
 {{- define "mautrix-googlechat.databaseConnectionString" -}}

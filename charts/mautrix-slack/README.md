@@ -212,6 +212,8 @@ logging:
 
 Bundled Postgres is enabled by default.
 
+If `database.postgres.password.value` is empty, the chart resolves it from the chart-managed Postgres Secret when present; otherwise it generates a 64-hex-char password for bundled Postgres on first install.
+
 Disable bundled Postgres and use external DB:
 
 ```yaml
