@@ -1,0 +1,45 @@
+---
+---
+
+@import "minima";
+
+.pages-callout {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 0.35rem solid;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.pages-callout-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pages-callout > :last-child {
+  margin-bottom: 0;
+}
+
+.pages-callout-tip {
+  border-color: #2fbf71;
+  background: rgba(47, 191, 113, 0.14);
+}
+
+.pages-callout-note {
+  border-color: #4ea1ff;
+  background: rgba(78, 161, 255, 0.14);
+}
+
+.pages-callout-important {
+  border-color: #9b7bff;
+  background: rgba(155, 123, 255, 0.14);
+}
+
+.pages-callout-warning,
+.pages-callout-caution {
+  border-color: #ff9f43;
+  background: rgba(255, 159, 67, 0.14);
+}
