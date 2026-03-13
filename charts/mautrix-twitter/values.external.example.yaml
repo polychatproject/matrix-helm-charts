@@ -15,6 +15,8 @@ database:
     user: mautrix_twitter
     password:
       value: replace_me
+      # existingSecret: my-postgres-password
+      # existingSecretKey: password
     database: mautrix_twitter
     sslMode: require
 
