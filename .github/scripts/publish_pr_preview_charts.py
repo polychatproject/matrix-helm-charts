@@ -230,16 +230,23 @@ def command_publish(args: argparse.Namespace) -> int:
         return 0
 
     charts_root = pathlib.Path(args.charts_root)
-    with tempfile.TemporaryDirectory() as work_dir:
-        work_charts_root = pathlib.Path(work_dir) / "charts"
-        shutil.copytree(charts_root, work_charts_root)
+    all_build_charts = dependency_closure(charts_root, charts)
+    all_versions = preview_versions(charts_root, all_build_charts, args.pr_number, args.head_sha, args.mode)
 
-        build_charts = dependency_closure(work_charts_root, charts)
-        versions = preview_versions(work_charts_root, build_charts, args.pr_number, args.head_sha, args.mode)
-        rewrite_chart_versions(work_charts_root, build_charts, versions)
-        rewrite_chart_template_names(work_charts_root, charts)
-        package_and_push(work_charts_root, charts, versions, args.oci_registry)
-        versions_output.write_text("".join(f"{chart}={versions[chart]}\n" for chart in charts))
+    published_versions: list[str] = []
+    for chart in charts:
+        with tempfile.TemporaryDirectory() as work_dir:
+            work_charts_root = pathlib.Path(work_dir) / "charts"
+            shutil.copytree(charts_root, work_charts_root)
+
+            build_charts = dependency_closure(work_charts_root, [chart])
+            versions = {build_chart: all_versions[build_chart] for build_chart in build_charts}
+            rewrite_chart_versions(work_charts_root, build_charts, versions)
+            rewrite_chart_template_names(work_charts_root, [chart])
+            package_and_push(work_charts_root, [chart], versions, args.oci_registry)
+            published_versions.append(f"{chart}={all_versions[chart]}")
+
+    versions_output.write_text("".join(f"{entry}\n" for entry in published_versions))
 
     return 0
 
