@@ -2,6 +2,9 @@ name: Publish PR Preview Charts
 description: Detect changed charts for a PR and publish rolling and immutable OCI previews.
 
 inputs:
+  source-root:
+    description: Repository checkout containing the PR source to publish
+    required: true
   base-sha:
     description: Base commit SHA for the PR
     required: true
@@ -29,7 +32,8 @@ runs:
       shell: bash
       run: |
         python3 "${{ github.action_path }}/../../scripts/publish_pr_preview_charts.py" detect \
-          --charts-root charts \
+          --repo-root "${{ inputs.source-root }}" \
+          --charts-root "${{ inputs.source-root }}/charts" \
           --base-sha "${{ inputs.base-sha }}" \
           --head-sha "${{ inputs.head-sha }}" \
           --github-output "${GITHUB_OUTPUT}"
@@ -52,7 +56,7 @@ runs:
         echo "${{ inputs.ghcr-password }}" | helm registry login ghcr.io -u "${{ inputs.ghcr-username }}" --password-stdin
 
         python3 "${{ github.action_path }}/../../scripts/publish_pr_preview_charts.py" publish \
-          --charts-root charts \
+          --charts-root "${{ inputs.source-root }}/charts" \
           --charts-file "${charts_file}" \
           --pr-number "${{ inputs.pr-number }}" \
           --head-sha "${{ inputs.head-sha }}" \
@@ -61,7 +65,7 @@ runs:
           --versions-output "${rolling_versions_file}"
 
         python3 "${{ github.action_path }}/../../scripts/publish_pr_preview_charts.py" publish \
-          --charts-root charts \
+          --charts-root "${{ inputs.source-root }}/charts" \
           --charts-file "${charts_file}" \
           --pr-number "${{ inputs.pr-number }}" \
           --head-sha "${{ inputs.head-sha }}" \

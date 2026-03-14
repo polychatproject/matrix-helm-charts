@@ -14,8 +14,8 @@ DEP_NAME_RE = re.compile(r'^\s*-\s*name:\s*"?([^"\n#]+)"?\s*$')
 DEP_VERSION_RE = re.compile(r'^(\s*version:\s*).*$')
 
 
-def run(*args: str) -> str:
-    return subprocess.check_output(list(args), text=True).strip()
+def run(*args: str, cwd: str | None = None) -> str:
+    return subprocess.check_output(list(args), text=True, cwd=cwd).strip()
 
 
 def chart_dependency_graph(charts_root: pathlib.Path) -> tuple[dict[str, pathlib.Path], dict[str, set[str]]]:
@@ -38,10 +38,10 @@ def chart_dependency_graph(charts_root: pathlib.Path) -> tuple[dict[str, pathlib
     return chart_dirs, consumers_by_dep
 
 
-def detect_changed_charts(charts_root: pathlib.Path, base_sha: str, head_sha: str) -> list[str]:
+def detect_changed_charts(repo_root: pathlib.Path, charts_root: pathlib.Path, base_sha: str, head_sha: str) -> list[str]:
     chart_dirs, consumers_by_dep = chart_dependency_graph(charts_root)
-    merge_base = run("git", "merge-base", base_sha, head_sha)
-    diff_lines = run("git", "diff", "--name-only", merge_base, head_sha, "--", "charts").splitlines()
+    merge_base = run("git", "merge-base", base_sha, head_sha, cwd=str(repo_root))
+    diff_lines = run("git", "diff", "--name-only", merge_base, head_sha, "--", "charts", cwd=str(repo_root)).splitlines()
 
     changed: set[str] = set()
     for path in diff_lines:
@@ -145,7 +145,8 @@ def package_and_push(charts_root: pathlib.Path, charts: list[str], versions: dic
 
 
 def command_detect(args: argparse.Namespace) -> int:
-    charts = detect_changed_charts(pathlib.Path(args.charts_root), args.base_sha, args.head_sha)
+    repo_root = pathlib.Path(args.repo_root)
+    charts = detect_changed_charts(repo_root, pathlib.Path(args.charts_root), args.base_sha, args.head_sha)
     if args.github_output:
         write_github_output(pathlib.Path(args.github_output), charts)
     else:
@@ -178,6 +179,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     detect_parser = subparsers.add_parser("detect")
+    detect_parser.add_argument("--repo-root", default=".")
     detect_parser.add_argument("--charts-root", default="charts")
     detect_parser.add_argument("--base-sha", required=True)
     detect_parser.add_argument("--head-sha", required=True)

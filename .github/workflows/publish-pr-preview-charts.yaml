@@ -99,11 +99,16 @@ jobs:
       needs.resolve-context.outputs.pr_author_login == 'cyclikal94'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout workflow ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Checkout PR head
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ needs.resolve-context.outputs.head_sha }}
+          path: pr-source
 
       - name: Set up Helm
         uses: azure/setup-helm@v4
@@ -111,6 +116,7 @@ jobs:
       - name: Publish previews
         uses: ./.github/actions/publish-pr-preview-charts
         with:
+          source-root: pr-source
           base-sha: ${{ needs.resolve-context.outputs.base_sha }}
           head-sha: ${{ needs.resolve-context.outputs.head_sha }}
           pr-number: ${{ needs.resolve-context.outputs.pr_number }}
@@ -127,11 +133,16 @@ jobs:
     environment:
       name: pr-preview-publish
     steps:
+      - name: Checkout workflow ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Checkout PR head
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ needs.resolve-context.outputs.head_sha }}
+          path: pr-source
 
       - name: Set up Helm
         uses: azure/setup-helm@v4
@@ -139,6 +150,7 @@ jobs:
       - name: Publish previews
         uses: ./.github/actions/publish-pr-preview-charts
         with:
+          source-root: pr-source
           base-sha: ${{ needs.resolve-context.outputs.base_sha }}
           head-sha: ${{ needs.resolve-context.outputs.head_sha }}
           pr-number: ${{ needs.resolve-context.outputs.pr_number }}
