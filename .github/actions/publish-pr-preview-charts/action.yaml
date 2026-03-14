@@ -118,13 +118,17 @@ runs:
             echo '```'
           fi
         } >> "${GITHUB_STEP_SUMMARY}"
+        CHARTS_FILE="${charts_file}" \
+        ROLLING_VERSIONS_FILE="${rolling_versions_file}" \
+        COMMIT_VERSIONS_FILE="${commit_versions_file}" \
         python3 <<'PY' > "${payload_file}"
         import json
+        import os
         import pathlib
 
-        charts_file = pathlib.Path("${charts_file}")
-        rolling_versions_file = pathlib.Path("${rolling_versions_file}")
-        commit_versions_file = pathlib.Path("${commit_versions_file}")
+        charts_file = pathlib.Path(os.environ["CHARTS_FILE"])
+        rolling_versions_file = pathlib.Path(os.environ["ROLLING_VERSIONS_FILE"])
+        commit_versions_file = pathlib.Path(os.environ["COMMIT_VERSIONS_FILE"])
 
         charts = [line.strip() for line in charts_file.read_text().splitlines() if line.strip()]
         rolling_versions = {}
