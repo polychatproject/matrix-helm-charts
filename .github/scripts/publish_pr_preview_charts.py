@@ -9,7 +9,7 @@ import tempfile
 
 
 LOCAL_DEP_REPO_RE = re.compile(r'^\s*repository:\s*file://\.\./([^"\n#\s]+)\s*$')
-TOP_LEVEL_VERSION_RE = re.compile(r'^version:\s*"?([^"\n#]+)"?\s*$')
+TOP_LEVEL_VERSION_RE = re.compile(r'^version:\s*"?([^"\n#]+)"?\s*$', re.MULTILINE)
 DEP_NAME_RE = re.compile(r'^\s*-\s*name:\s*"?([^"\n#]+)"?\s*$')
 DEP_VERSION_RE = re.compile(r'^(\s*version:\s*).*$')
 
