@@ -382,6 +382,7 @@ jobs:
         if: steps.update.outputs.changed == 'true' && matrix.chart_dir != ''
         run: |
           set -euo pipefail
+          helm dependency build "${{ matrix.chart_dir }}"
           if [ -f "${{ matrix.chart_dir }}/values.example.yaml" ]; then
             helm lint "${{ matrix.chart_dir }}" -f "${{ matrix.chart_dir }}/values.example.yaml"
           else
