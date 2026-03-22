@@ -51,8 +51,8 @@ helm upgrade --install <release-name> matrix-helm-charts/<chart-name> --namespac
 
 ## Components
 
-![TIP]
-Click on the desired helm charts' badge to be taken to its README for detailed deployment information.
+> ![TIP]
+> Click on the desired helm charts' badge to be taken to its README for detailed deployment information.
 
 
 Components are organised into categories copying the [matrix.org Ecosystem](https://matrix.org/ecosystem/) section. As such components will be either `Clients`, `Bridges`, `Servers`, or `Integrations` - where components aren't present on [matrix.org](https://matrix.org/ecosystem/) I'll do my best to put them in an appropriate category. The remaining catefories of `SDKs`, `Distribution` and `Hosting` are unlikely to be applicable here.
