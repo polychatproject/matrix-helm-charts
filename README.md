@@ -43,7 +43,7 @@ helm upgrade --install <release-name> matrix-helm-charts/<chart-name> --namespac
 
 ## Components
 
-> ![TIP]
+> [!TIP]
 > Click on the desired helm charts' badge to be taken to its README for detailed deployment information.
 
 
