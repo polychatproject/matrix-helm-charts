@@ -4,6 +4,11 @@ metadata:
   name: {{ include "polychat-appservice.fullname" . }}
   labels:
     {{- include "polychat-appservice.labels" . | nindent 4 }}
+  {{- if .Values.imageStreamRolloutTrigger.enabled }}
+  annotations:
+    image.openshift.io/triggers: |
+      [{"from":{"kind":"ImageStreamTag","name":"{{ .Values.imageStreamRolloutTrigger.imageStreamTag }}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"polychat-appservice\")].image"}]
+  {{- end }}
 spec:
   # Singleton — pool state lives in memory.
   serviceName: {{ include "polychat-appservice.fullname" . }}
@@ -29,7 +34,15 @@ spec:
       {{- end }}
       containers:
         - name: polychat-appservice
+          {{- if .Values.imageStreamRolloutTrigger.enabled }}
+          # When the OpenShift ImageStream trigger is on, the
+          # image-trigger controller writes spec.containers[].image
+          # itself (resolving the tag to a digest). Leaving an explicit
+          # image: here would cause a server-side-apply conflict with
+          # openshift-controller-manager.
+          {{- else }}
           image: {{ include "polychat-appservice.image" . | quote }}
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.containerSecurityContext }}
           securityContext:

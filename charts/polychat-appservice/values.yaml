@@ -1,13 +1,21 @@
 # polychat-appservice helm chart — default values
 
-# Image. The published image is built by the polychat-appservice GitHub
-# Actions workflow (docker-publish.yml).
+# Image source. Default is the OpenShift internal registry (built by the
+# `polychat-appservice-main` BuildConfig in the same namespace) so the
+# cluster doesn't need any external pull secret. Override the registry/
+# repository to point at GHCR or another upstream when running off-cluster.
 image:
-  registry: ghcr.io
-  repository: polychatproject/polychat-appservice
+  registry: image-registry.openshift-image-registry.svc:5000
+  repository: dtn10-customer-polychat/polychat-appservice
   tag: main
   pullPolicy: IfNotPresent
   pullSecrets: []
+# When true, an `image.openshift.io/triggers` annotation is added to the
+# StatefulSet so a fresh build of the ImageStreamTag triggers a rollout.
+# Only meaningful on OpenShift.
+imageStreamRolloutTrigger:
+  enabled: true
+  imageStreamTag: polychat-appservice:main
 
 # StatefulSet (singleton — the appservice keeps the unclaimed sub-room
 # pool in memory).

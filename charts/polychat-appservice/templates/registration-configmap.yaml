@@ -22,17 +22,13 @@ data:
     sender_localpart: {{ .Values.appservice.registration.senderLocalpart | quote }}
     rate_limited: false
     namespaces:
+      # The polychat-appservice (matrix-bot-sdk) requires exactly one
+      # users namespace regex. The puppeting accounts the appservice
+      # talks AT (telegram_, whatsapp_, signal_, irc_) belong to those
+      # bridges' own appservice registrations, not to polychat.
       users:
         - exclusive: true
           regex: "@polychat_.*"
-        - exclusive: false
-          regex: "@telegram_.*"
-        - exclusive: false
-          regex: "@whatsapp_.*"
-        - exclusive: false
-          regex: "@signal_.*"
-        - exclusive: false
-          regex: "@irc_.*"
       aliases:
         - exclusive: false
           regex: "#polychat_.*"
