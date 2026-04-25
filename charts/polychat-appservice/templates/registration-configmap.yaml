@@ -1,0 +1,49 @@
+{{- if .Values.appservice.registration.autoGenerate }}
+{{- $tokenSecret := printf "%s-tokens" (include "polychat-appservice.fullname" .) }}
+{{- $existingSecret := lookup "v1" "Secret" .Release.Namespace $tokenSecret }}
+{{- $asToken := "" -}}
+{{- $hsToken := "" -}}
+{{- if $existingSecret }}
+{{- $asToken = index $existingSecret.data "asToken" | b64dec -}}
+{{- $hsToken = index $existingSecret.data "hsToken" | b64dec -}}
+{{- end -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "polychat-appservice.fullname" . }}-registration
+  labels:
+    {{- include "polychat-appservice.labels" . | nindent 4 }}
+data:
+  registration.yaml: |
+    id: {{ .Values.appservice.registration.id | quote }}
+    url: {{ include "polychat-appservice.appserviceAddress" . | quote }}
+    as_token: {{ $asToken | default "PLACEHOLDER_RUN_HELM_UPGRADE_TO_POPULATE" | quote }}
+    hs_token: {{ $hsToken | default "PLACEHOLDER_RUN_HELM_UPGRADE_TO_POPULATE" | quote }}
+    sender_localpart: {{ .Values.appservice.registration.senderLocalpart | quote }}
+    rate_limited: false
+    namespaces:
+      # The polychat-appservice (matrix-bot-sdk) requires exactly one
+      # users namespace regex. The puppeting accounts the appservice
+      # talks AT (telegram_, whatsapp_, signal_, irc_) belong to those
+      # bridges' own appservice registrations, not to polychat.
+      users:
+        - exclusive: true
+          regex: "@polychat_.*"
+      aliases:
+        - exclusive: false
+          regex: "#polychat_.*"
+      rooms: []
+{{- end }}
+{{- if and .Values.appservice.registration.autoGenerate .Values.appservice.registration.synapseNamespace (ne .Values.appservice.registration.synapseNamespace .Release.Namespace) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "polychat-appservice.fullname" . }}-registration
+  namespace: {{ .Values.appservice.registration.synapseNamespace }}
+  labels:
+    {{- include "polychat-appservice.labels" . | nindent 4 }}
+data:
+  registration.yaml: |
+    {{- (lookup "v1" "ConfigMap" .Release.Namespace (printf "%s-registration" (include "polychat-appservice.fullname" .))).data.registration.yaml | nindent 4 }}
+{{- end }}

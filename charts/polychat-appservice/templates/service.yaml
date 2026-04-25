@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "polychat-appservice.fullname" . }}
+  labels:
+    {{- include "polychat-appservice.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "polychat-appservice.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: appservice
+      port: {{ .Values.appservice.port }}
+      targetPort: appservice
+      protocol: TCP
+    - name: api
+      port: {{ .Values.api.port }}
+      targetPort: api
+      protocol: TCP

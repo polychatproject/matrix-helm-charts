@@ -1,0 +1,146 @@
+# polychat-appservice helm chart — default values
+
+# Image source. Default is the OpenShift internal registry (built by the
+# `polychat-appservice-main` BuildConfig in the same namespace) so the
+# cluster doesn't need any external pull secret. Override the registry/
+# repository to point at GHCR or another upstream when running off-cluster.
+image:
+  registry: image-registry.openshift-image-registry.svc:5000
+  repository: dtn10-customer-polychat/polychat-appservice
+  tag: main
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+# When true, an `image.openshift.io/triggers` annotation is added to the
+# StatefulSet so a fresh build of the ImageStreamTag triggers a rollout.
+# Only meaningful on OpenShift.
+imageStreamRolloutTrigger:
+  enabled: true
+  imageStreamTag: polychat-appservice:main
+
+# StatefulSet (singleton — the appservice keeps the unclaimed sub-room
+# pool in memory).
+replicas: 1
+
+# Server name (the suffix in @user:<server_name>) the homeserver runs on.
+# Examples: polychat.de
+serverName: ""
+
+# In-cluster homeserver address (Synapse client+AS API).
+homeserverUrl: ""   # e.g. http://ess-synapse-main.dtn10-customer-polychat.svc.cluster.local:8008
+
+# Provisioning API & Linker Frontend (used by polychat.de/join/<token>).
+api:
+  port: 9998
+  bindAddress: "0.0.0.0"
+  ingress:
+    enabled: true
+    className: openshift-default
+    host: ""               # e.g. join.polychat.de
+    annotations: {}
+    tls:
+      enabled: true
+      certManager:
+        clusterIssuer: letsencrypt
+
+# Internal AppService HTTP port (Synapse → appservice transactions).
+appservice:
+  port: 9999
+  bindAddress: "0.0.0.0"
+  # Registration file for Synapse to load. The chart can either:
+  # - generate a registration ConfigMap from a chart-managed secret (default), or
+  # - use an existingSecret holding a key `registration.yaml`.
+  registration:
+    autoGenerate: true
+    existingSecret: ""
+    # Identifier used inside the registration file. Synapse writes to this
+    # appservice via address (in-cluster Service URL).
+    id: polychat
+    # Bot localpart that the chart-side registers as a sender_localpart.
+    senderLocalpart: polychat
+    # Optional override of the regex namespaces; defaults are derived.
+    extraNamespaces: {}
+    # Whether to copy the registration ConfigMap into another namespace
+    # (the Synapse namespace). Empty = same namespace as this release.
+    synapseNamespace: ""
+
+# Sub room pool target per network.
+subRoomsPoolTarget: 2
+
+# Loose / default behavior for experimental features.
+loadExistingRooms: false
+
+# A debug user that is invited to every sub room. Empty = disabled.
+debugMxid: ""
+
+# Per-network bridge configuration. These are typically MXIDs of the
+# bridge bots and the puppeting accounts the polychat appservice talks
+# to. Leave a network's mxid empty to disable that network.
+networks:
+  irc:
+    bridgeMxid: ""
+    server: ""           # e.g. inspircd
+  matrix:
+    enabled: false
+    accountMxids: []     # comma-joined for env
+  signal:
+    bridgeMxid: ""
+    accountMxids: []
+    commandPrefix: "!signal"
+  telegram:
+    bridgeMxid: ""
+    accountMxids: []
+    tugMxid: ""
+    commandPrefix: "!tg"
+  whatsapp:
+    bridgeMxid: ""
+    accountMxids: []
+    commandPrefix: "!wa"
+
+# Persistent storage for room state cache + appservice.json.
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClassName: ""
+  accessMode: ReadWriteOnce
+
+# Resources.
+resources:
+  requests:
+    cpu: 50m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+# Pod-level security. Empty so OpenShift's SCC mutator can auto-assign UIDs
+# from the namespace range. Set fields explicitly when running on stock
+# Kubernetes.
+podSecurityContext: {}
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: [ALL]
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+# Liveness / readiness — the appservice's /healthz path is on the API port.
+probes:
+  liveness:
+    enabled: true
+    initialDelaySeconds: 30
+    periodSeconds: 30
+  readiness:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
