@@ -1,0 +1,23 @@
+apiVersion: v2
+name: polychat-appservice
+description: |
+  The Polychat Matrix appservice (orchestrator + linker frontend) deployed
+  alongside an existing Matrix homeserver. Bundles a singleton StatefulSet
+  workload (one in-memory pool of unclaimed sub rooms), the public-facing
+  /api provisioning + linker frontend Ingress, and an optional ConfigMap
+  containing the Synapse appservice registration.
+home: https://polychat.de
+sources:
+  - https://github.com/polychatproject/polychat-appservice
+icon: https://polychat.de/wp-content/uploads/2023/11/Polychat_Logo_Square.png
+type: application
+version: 0.1.0
+appVersion: "main"
+keywords:
+  - matrix
+  - polychat
+  - appservice
+  - bridge
+maintainers:
+  - name: Datanauten
+    email: hallo@polychat.de

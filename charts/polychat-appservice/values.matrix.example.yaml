@@ -1,0 +1,39 @@
+# Example values targeted at the Polychat ESS Community deployment in
+# `dtn10-customer-polychat`. Drop into a real install with:
+#
+#   helm upgrade --install -n dtn10-customer-polychat polychat-appservice \
+#     ./charts/polychat-appservice \
+#     -f values.matrix.example.yaml
+
+serverName: polychat.de
+homeserverUrl: http://ess-synapse-main.dtn10-customer-polychat.svc.cluster.local:8008
+
+api:
+  ingress:
+    enabled: true
+    host: join.polychat.de
+
+# Bridges in the same namespace.
+networks:
+  whatsapp:
+    bridgeMxid: "@whatsappbot:polychat.de"
+    accountMxids:
+      - "@polychat_whatsapp_polybot_02:polychat.de"
+      - "@polychat_whatsapp_polybot_03:polychat.de"
+  signal:
+    bridgeMxid: "@signalbot:polychat.de"
+    accountMxids:
+      - "@polychat_signal_polybot_02:polychat.de"
+      - "@polychat_signal_polybot_03:polychat.de"
+  telegram:
+    bridgeMxid: "@telegrambot:polychat.de"
+    tugMxid: "@polychat_telegram_polybot_01:polychat.de"
+    accountMxids:
+      - "@polychat_telegram_polybot_02:polychat.de"
+      - "@polychat_telegram_polybot_03:polychat.de"
+
+# 2 prepared sub rooms per network is the historical default.
+subRoomsPoolTarget: 2
+
+# Optional debug user that gets invited to every sub room.
+# debugMxid: "@yan:polychat.de"
